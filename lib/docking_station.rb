@@ -13,8 +13,8 @@ class DockingStation
   end
 
   def dock(new_bike)
+      raise "Docking station is full" if @docked_bikes.length == 10
       @docked_bikes << new_bike
-
   end
 
   def any_bikes_docked?

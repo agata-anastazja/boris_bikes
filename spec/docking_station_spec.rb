@@ -28,4 +28,9 @@ describe DockingStation do
     expect {subject.release_bike}.to raise_error("There are no more bikes!")
   end
 
+  it "should return full station error if station is full and we try to dock a bike" do
+    bike=Bike.new
+    10.times{subject.dock(bike)}
+    expect {subject.dock(bike)}.to raise_error("Docking station is full")
+  end
 end
