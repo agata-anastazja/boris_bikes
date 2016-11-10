@@ -3,3 +3,6 @@ class Bike
   	true
   end
 end
+
+
+#that's a test comment
