@@ -9,8 +9,20 @@ class DockingStation
   end
 
   def release_bike
-    raise "There are no more bikes!" if empty?
-    @docked_bikes.shift
+    raise "There are no more working bikes!" if empty?
+
+    working_bike
+  end
+
+  def working_bike
+    released_bike = nil
+    @docked_bikes.each do |bike|
+        if bike.working
+          released_bike = bike
+        end
+    end
+    raise "There are no more working bikes!" if released_bike == nil
+    @docked_bikes.delete(released_bike)
   end
 
 
@@ -19,15 +31,10 @@ class DockingStation
       @docked_bikes << new_bike
   end
 
-  def any_bikes_docked?
-    @docked_bikes.any?
-  end
-
   private
     def full?
       @docked_bikes.length == @capacity
     end
-
 
     def empty?
       @docked_bikes.empty?
