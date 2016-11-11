@@ -10,7 +10,6 @@ class DockingStation
 
   def release_bike
     raise "There are no more working bikes!" if empty?
-
     working_bike
   end
 

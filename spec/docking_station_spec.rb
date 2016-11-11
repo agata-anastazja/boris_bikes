@@ -5,14 +5,13 @@ describe DockingStation do
   it {is_expected.to respond_to(:release_bike)}
 
   it 'expects bike to be working' do
-  	bike = Bike.new
-  	expect(bike.working).to eq true
+  	expect(double(:bike).working).to eq true
   end
 
   it {is_expected.to respond_to(:dock).with(1).argument}
 
   it "expects bike to be docked" do
-    bike = Bike.new
+    bike = double(:bike)
     subject.dock(bike)
     expect(subject.docked_bikes).to include(bike)
   end
@@ -23,9 +22,9 @@ describe DockingStation do
   end
 
   it "should return full station error if station is full and we try to dock a bike" do
-    bike=Bike.new
-    DockingStation::DEFAULT_CAPACITY.times{subject.dock(bike)}
-    expect {subject.dock(bike)}.to raise_error("Docking station is full")
+
+    DockingStation::DEFAULT_CAPACITY.times{subject.dock(double(:bike))}
+    expect {subject.dock(double(:bike))}.to raise_error("Docking station is full")
   end
 
   it "expects the capacity to be default unless argument given" do
@@ -36,25 +35,25 @@ describe DockingStation do
   describe "Challenge 18" do
     context "when a bike is broken i can report it to the docking station" do
       it "returns false if a bike is not working" do
-        bike = Bike.new(false)
+        double(:bike)
         station = DockingStation.new
-        station.dock(bike)
+        station.dock(double(:bike))
         expect(station.docked_bikes[0].working).to be false
       end
     end
     context "when trying to get a bike it" do
       it "doesn't realease a broken bike when you have just 1 broken bike inside the station" do
-        bike = Bike.new
-        bike.report
+        double(:bike)
+        double(:bike).report
         station = DockingStation.new
-        station.dock(bike)
+        station.dock(double(:bike))
         expect{station.release_bike}.to raise_error("There are no more working bikes!")
       end
       it "releases only working bikes when both broken and working bikes are present" do
-        bike1 = Bike.new
-        bike2 = Bike.new(false)
-        bike3 = Bike.new
-        bike4 = Bike.new(false)
+        bike1 = double(:bike)
+        bike2 = double(:bike)
+        bike3 = double(:bike)
+        bike4 = double(:bike)
         station = DockingStation.new
         station.dock(bike1)
         station.dock(bike2)
