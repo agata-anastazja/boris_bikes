@@ -1,10 +1,11 @@
 require './lib/bike.rb'
 
 class DockingStation
-  attr_reader :docked_bikes
+  attr_reader :docked_bikes, :capacity
   DEFAULT_CAPACITY = 20
-  def initialize
+  def initialize(capacity = DEFAULT_CAPACITY)
     @docked_bikes = []
+    @capacity = capacity
   end
 
   def release_bike
@@ -24,7 +25,7 @@ class DockingStation
 
   private
     def full?
-      @docked_bikes.length == DEFAULT_CAPACITY
+      @docked_bikes.length == @capacity
     end
 
 
